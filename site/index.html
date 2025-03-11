@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Playtest Printer</title>
+    <meta property="og:title" content="Playtest Printer" />
+    <meta
+      property="og:description"
+      content="Print images into 2.5x3.5in cards for playtesting"
+    />
+    <meta property="og:url" content="https://playtest.hamatti.org" />
+
+    <style>
+      @media print {
+        .no-print {
+          display: none;
+        }
+      }
+
+      .options {
+        max-width: 100vw;
+        padding: 0.5em;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #d3d3d3;
+      }
+
+      button#help {
+        background: transparent;
+        border: 1px solid black;
+        border-radius: 5px;
+        color: black;
+        margin-right: 20px;
+      }
+
+      div#help-text {
+        padding: 1em;
+        border-bottom: 1px solid black;
+
+        & h1 {
+          margin-top: 0;
+        }
+
+        & hr {
+          width: 50%;
+          margin: auto;
+          color: #d3d3d3;
+        }
+      }
+
+      div#help-text.closed {
+        display: none;
+      }
+
+      div#drop-zone {
+        /* positions to point 0,0 - required for z-index */
+        position: fixed;
+        top: 0;
+        left: 0;
+        /* above all elements, even if z-index is used elsewhere
+				it can be lowered as needed, but this value surpasses
+				all elements when used on YouTube for example. */
+        z-index: 9999999999;
+        /* takes up 100% of page */
+        width: 100%;
+        height: 100%;
+        /* dim the page with 50% black background when visible */
+        background-color: rgba(0, 0, 0, 0.2);
+        /* a nice fade effect, visibility toggles after 175ms, opacity will animate for 175ms. note display:none cannot be animated.  */
+        transition: visibility 175ms, opacity 175ms;
+      }
+    </style>
+
+    <link rel="stylesheet" href="card-print.css" />
+  </head>
+
+  <body>
+    <div class="no-print">
+      <div class="options">
+        <div>
+          <label for="parse-counts">Multiple copies </label>
+          <input id="parse-counts" type="checkbox" />
+        </div>
+        <button id="help" aria-label="help">?</button>
+      </div>
+    </div>
+    <div id="help-text" class="closed">
+      <h2>Help</h2>
+      <p>
+        Playtest Printer turns images of ratio 2.5:3.5 into sheets of printable
+        A4s where cards - once cut - are the right size to fit into a standard
+        card sleeve.
+      </p>
+      <p>
+        <strong>Multiple copies</strong>: if checked, any file that starts with
+        <code>3x-</code> (replace 3 with number of copies you want), will be
+        added 3 times to the sheet.
+      </p>
+      <p>
+        <strong>Remove a card</strong>: To remove a card from the sheet, double
+        click its image.
+      </p>
+      <hr />
+      <p>
+        Created with &hearts; by <a href="https://hamatti.org/">Juhis</a>.
+        Source available at
+        <a href="https://github.com/hamatti/playtest-printer"
+          >https://github.com/hamatti/playtest-printer</a
+        >.
+      </p>
+    </div>
+    <div id="status"></div>
+    <div id="drop-zone" style="visibility: hidden; opacity: 0"></div>
+
+    <div id="proxy-zone"></div>
+
+    <script src="playtest.js"></script>
+  </body>
+</html>
