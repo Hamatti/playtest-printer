@@ -64,7 +64,7 @@ if (window.FileReader) {
               });
               output.appendChild(img);
             }
-          }.bindToEventHandler(file)
+          }.bindToEventHandler(file),
         );
       }
       if (e.target === lastTarget || e.target === document) {

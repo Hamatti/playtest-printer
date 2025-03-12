@@ -12,7 +12,7 @@
     <style>
       @media print {
         .no-print {
-          display: none;
+          display: none !important;
         }
       }
 
@@ -24,12 +24,16 @@
         border-bottom: 1px solid #d3d3d3;
       }
 
-      button#help {
+      button {
         background: transparent;
         border: 1px solid black;
         border-radius: 5px;
         color: black;
         margin-right: 20px;
+      }
+
+      button#overlay {
+        border: none;
       }
 
       div#help-text {
@@ -57,8 +61,8 @@
         top: 0;
         left: 0;
         /* above all elements, even if z-index is used elsewhere
-				it can be lowered as needed, but this value surpasses
-				all elements when used on YouTube for example. */
+      	it can be lowered as needed, but this value surpasses
+      	all elements when used on YouTube for example. */
         z-index: 9999999999;
         /* takes up 100% of page */
         width: 100%;
@@ -67,6 +71,48 @@
         background-color: rgba(0, 0, 0, 0.2);
         /* a nice fade effect, visibility toggles after 175ms, opacity will animate for 175ms. note display:none cannot be animated.  */
         transition: visibility 175ms, opacity 175ms;
+      }
+
+      main {
+        flex: 1 1 100%;
+        width: 100%;
+      }
+
+      aside {
+        display: none;
+        padding-top: 1em;
+        border-left: 1px dashed #d3d3d3;
+        height: 100vh;
+        padding-left: 1em;
+      }
+      #search-overlay {
+        width: 500px;
+        flex-basis: 0;
+      }
+
+      aside.visible {
+        flex-basis: 500px;
+        flex-grow: 1;
+        display: block;
+      }
+
+      .card-listing {
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+
+        & img {
+          max-width: 150px;
+          max-height: 210px;
+        }
+      }
+
+      .lower {
+        display: flex;
+        flex-direction: row;
+      }
+      .search-options {
+        margin-bottom: 0.5em;
       }
     </style>
 
@@ -80,7 +126,10 @@
           <label for="parse-counts">Multiple copies </label>
           <input id="parse-counts" type="checkbox" />
         </div>
-        <button id="help" aria-label="help">?</button>
+        <div>
+          <button id="help" aria-label="help">?</button>
+          <button id="overlay" aria-label="Open search">&#x1F50D;</button>
+        </div>
       </div>
     </div>
     <div id="help-text" class="closed">
@@ -108,11 +157,32 @@
         >.
       </p>
     </div>
-    <div id="status"></div>
-    <div id="drop-zone" style="visibility: hidden; opacity: 0"></div>
+    <div class="lower">
+      <main>
+        <div id="status"></div>
+        <div id="drop-zone" style="visibility: hidden; opacity: 0"></div>
 
-    <div id="proxy-zone"></div>
+        <div id="proxy-zone"></div>
+      </main>
+      <aside class="no-print">
+        <div id="search-overlay">
+          <div>
+            <div class="search-options">
+              <label for="pokemon">Pokemon:</label
+              ><input id="pokemon" type="radio" name="game" checked />
+              <label for="mtg">MTG:</label
+              ><input id="mtg" type="radio" name="game" />
+            </div>
+            <label for="card-search">Search:</label>
 
+            <input type="text" id="card-search" />
+            <button id="search-btn">Submit</button>
+          </div>
+          <div id="search-results"></div>
+        </div>
+      </aside>
+    </div>
     <script src="playtest.js"></script>
+    <script src="card-overlay.js"></script>
   </body>
 </html>
