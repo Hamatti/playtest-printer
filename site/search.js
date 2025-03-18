@@ -12,27 +12,37 @@ const mtgAPI = "https://api.scryfall.com/cards/search?q=";
 
 searchBtn.addEventListener("click", async (event) => {
   const isPokemon = document.querySelector("#pokemon").checked;
-  const isMagic = document.querySelector("#mtg").checked;
 
   event.preventDefault();
-  searchResults.innerHTML = "";
+  searchResults.innerHTML = "Searching for cards...";
 
   const query = searchInput.value;
+  console.log(query);
   let images = [];
 
   if (isPokemon) {
-    const resp = await fetch(`${pokemonAPI}${query}`);
+    const resp = await fetch(`${pokemonAPI}"${query}"`);
     const data = await resp.json();
 
     const cards = data.data;
-    images = cards.map((card) => card.images.large);
+    images = cards?.map((card) => card.images.large);
   } else {
     const resp = await fetch(`${mtgAPI}${query}`);
     const data = await resp.json();
-    images = data.data.map((card) => card.image_uris?.normal).filter((c) => c);
+    images = data?.data
+      ?.map((card) => card.image_uris?.normal)
+      .filter((c) => c);
+  }
+
+  if (images === undefined || images.length === 0) {
+    searchResults.innerHTML = `No ${
+      isPokemon ? "Pokemon" : "Magic the Gathering"
+    } cards found.`;
+    return;
   }
   const ul = document.createElement("ul");
   ul.classList.add("card-listing");
+  searchResults.innerHTML = "";
   images.forEach((image) => {
     const li = document.createElement("li");
     const img = document.createElement("img");
