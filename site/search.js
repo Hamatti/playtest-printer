@@ -10,7 +10,13 @@ const proxyZone = document.querySelector("#proxy-zone");
 const pokemonAPI = "https://api.pokemontcg.io/v2/cards?q=name:";
 const mtgAPI = "https://api.scryfall.com/cards/search?q=";
 
-searchBtn.addEventListener("click", async (event) => {
+document.addEventListener("keyup", (event) => {
+  if (event.key === "Enter") {
+    search(event);
+  }
+});
+
+async function search(event) {
   const isPokemon = document.querySelector("#pokemon").checked;
 
   event.preventDefault();
@@ -63,7 +69,8 @@ searchBtn.addEventListener("click", async (event) => {
 
   searchResults.appendChild(ul);
   return false;
-});
+}
+searchBtn.addEventListener("click", search);
 
 document.querySelector("button#overlay").addEventListener("click", (event) => {
   document.querySelector("aside").classList.toggle("visible");
