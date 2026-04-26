@@ -62,6 +62,8 @@ async function search(event) {
         event.target.remove();
       });
       proxyZone.appendChild(proxyImage);
+      searchInput.focus();
+      searchInput.select();
     });
     li.appendChild(img);
     ul.appendChild(li);
