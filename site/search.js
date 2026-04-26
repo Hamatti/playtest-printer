@@ -63,6 +63,7 @@ async function handleShowAlternativeArts(event) {
   }
   const resp = await fetch(target.dataset.alts);
   const data = await resp.json();
+
   searchResults.innerHTML = "";
   const ul = document.createElement("ul");
   ul.classList.add("card-listing");
@@ -70,9 +71,13 @@ async function handleShowAlternativeArts(event) {
     const li = document.createElement("li");
     const img = document.createElement("img");
 
-    const image = card.image_uris?.normal;
-
-    img.src = image;
+    let image = null;
+    if (card.card_faces?.length > 0) {
+      img.src = card.card_faces[0].image_uris?.normal;
+      img.dataset.flip = card.card_faces[1].image_uris?.normal;
+    } else {
+      img.src = card.image_uris?.normal;
+    }
 
     img.addEventListener("click", handleAddCard);
 
@@ -127,14 +132,13 @@ async function search(event) {
   searchResults.innerHTML = "Searching for cards...";
 
   const query = searchInput.value;
-  let images = [];
+  let cards = [];
 
   if (isPokemon) {
     const resp = await fetch(`${pokemonAPI}"${query}"`);
     const data = await resp.json();
 
-    const cards = data.data;
-    images = cards?.map((card) => {
+    cards = data.data?.map((card) => {
       return {
         image: card.images.large,
         alternate_prints_uri: null,
