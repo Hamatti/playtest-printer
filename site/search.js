@@ -1,5 +1,5 @@
 /**
- * Adds a slideover panel for searching cards for Pokemon and MtG
+ * Adds a slideover panel for searching cards for Magic the Gathering
  */
 
 const searchBtn = document.querySelector("#search-btn");
@@ -7,7 +7,6 @@ const searchResults = document.querySelector("#search-results");
 const searchInput = document.querySelector("#card-search");
 const proxyZone = document.querySelector("#proxy-zone");
 
-const pokemonAPI = "https://api.pokemontcg.io/v2/cards?q=name:";
 const mtgAPI = "https://api.scryfall.com/cards/search?q=";
 
 const doubleCardLayouts = ["adventure", "split", "prototype", "prepare"];
@@ -128,49 +127,32 @@ function renderSearchResults(cards) {
 }
 
 /**
- * Search cards from either Pokemon or MTG API
+ * Search cards from Scryfall
  * and render results
  *
  * @param {Event} event
  */
 async function search(event) {
-  const isPokemon = document.querySelector("#pokemon").checked;
-
   event.preventDefault();
   searchResults.innerHTML = "Searching for cards...";
 
   const query = searchInput.value;
-  let cards = [];
 
-  if (isPokemon) {
-    const resp = await fetch(`${pokemonAPI}"${query}"`);
-    const data = await resp.json();
-
-    cards = data.data?.map((card) => {
+  const resp = await fetch(`${mtgAPI}${query}`);
+  const data = await resp.json();
+  const cards = data?.data
+    ?.map((card) => {
       return {
-        image: card.images.large,
-        alternate_prints_uri: null,
+        image: card.image_uris?.normal,
+        card_faces: card.card_faces,
+        alternate_prints_uri: card.prints_search_uri,
+        layout: card.layout,
       };
-    });
-  } else {
-    const resp = await fetch(`${mtgAPI}${query}`);
-    const data = await resp.json();
-    cards = data?.data
-      ?.map((card) => {
-        return {
-          image: card.image_uris?.normal,
-          card_faces: card.card_faces,
-          alternate_prints_uri: card.prints_search_uri,
-          layout: card.layout,
-        };
-      })
-      .filter((c) => c);
-  }
+    })
+    .filter((c) => c);
 
   if (cards === undefined || cards.length === 0) {
-    searchResults.innerHTML = `No ${
-      isPokemon ? "Pokemon" : "Magic the Gathering"
-    } cards found.`;
+    searchResults.innerHTML = `No Magic the Gathering cards found.`;
     return;
   }
 
