@@ -10,6 +10,8 @@ const proxyZone = document.querySelector("#proxy-zone");
 const pokemonAPI = "https://api.pokemontcg.io/v2/cards?q=name:";
 const mtgAPI = "https://api.scryfall.com/cards/search?q=";
 
+const doubleCardLayouts = ["adventure", "split", "prototype", "prepare"];
+
 document.addEventListener("keyup", (event) => {
   if (event.key === "Enter") {
     search(event);
@@ -72,7 +74,10 @@ async function handleShowAlternativeArts(event) {
     const img = document.createElement("img");
 
     let image = null;
-    if (card.card_faces?.length > 0) {
+    if (
+      card.card_faces?.length > 0 &&
+      !doubleCardLayouts.includes(card.layout)
+    ) {
       img.src = card.card_faces[0].image_uris?.normal;
       img.dataset.flip = card.card_faces[1].image_uris?.normal;
     } else {
@@ -99,7 +104,10 @@ function renderSearchResults(cards) {
     const li = document.createElement("li");
     const img = document.createElement("img");
 
-    if (card.card_faces?.length > 0) {
+    if (
+      card.card_faces?.length > 0 &&
+      !doubleCardLayouts.includes(card.layout)
+    ) {
       img.src = card.card_faces[0].image_uris?.normal;
       img.dataset.flip = card.card_faces[1].image_uris?.normal;
     } else {
@@ -153,6 +161,7 @@ async function search(event) {
           image: card.image_uris?.normal,
           card_faces: card.card_faces,
           alternate_prints_uri: card.prints_search_uri,
+          layout: card.layout,
         };
       })
       .filter((c) => c);
