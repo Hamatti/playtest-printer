@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <title>Playtest Printer</title>
@@ -70,7 +70,9 @@
         /* dim the page with 50% black background when visible */
         background-color: rgba(0, 0, 0, 0.2);
         /* a nice fade effect, visibility toggles after 175ms, opacity will animate for 175ms. note display:none cannot be animated.  */
-        transition: visibility 175ms, opacity 175ms;
+        transition:
+          visibility 175ms,
+          opacity 175ms;
       }
 
       main {
@@ -168,10 +170,8 @@
         <div id="search-overlay">
           <div>
             <div class="search-options">
-              <label for="pokemon">Pokemon:</label
-              ><input id="pokemon" type="radio" name="game" checked />
-              <label for="mtg">MTG:</label
-              ><input id="mtg" type="radio" name="game" />
+              <label for="mtg">Magic the Gathering:</label
+              ><input id="mtg" type="radio" name="game" checked />
             </div>
             <label for="card-search">Search:</label>
 
