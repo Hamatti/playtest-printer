@@ -160,8 +160,8 @@ async function search(event) {
   searchResults.appendChild(renderSearchResults(cards));
   return false;
 }
-searchBtn.addEventListener("click", search);
+searchBtn?.addEventListener("click", search);
 
-document.querySelector("button#overlay").addEventListener("click", (event) => {
+document.querySelector("button#overlay")?.addEventListener("click", (event) => {
   document.querySelector("aside").classList.toggle("visible");
 });
