@@ -116,6 +116,14 @@
       .search-options {
         margin-bottom: 0.5em;
       }
+
+      form#bulk-import {
+        max-width: 95%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+      }
     </style>
 
     <link rel="stylesheet" href="card-print.css" />
@@ -180,9 +188,16 @@
           </div>
           <div id="search-results"></div>
         </div>
+        <hr />
+        <h2>Import bulk list from Moxfield</h2>
+        <form id="bulk-import">
+          <textarea name="bulk-decklist" rows="20"></textarea>
+          <button type="submit">Import</button>
+        </form>
       </aside>
     </div>
     <script src="playtest.js"></script>
     <script src="search.js"></script>
+    <script src="bulk-import.js"></script>
   </body>
 </html>
