@@ -124,6 +124,13 @@
         flex-direction: column;
         gap: 1em;
       }
+
+      button:has(img) {
+        border: 0;
+        margin: 0;
+        padding: 0;
+        background: none;
+      }
     </style>
 
     <link rel="stylesheet" href="card-print.css" />
@@ -176,16 +183,15 @@
       </main>
       <aside class="no-print">
         <div id="search-overlay">
-          <div>
+          <form>
             <div class="search-options">
               <label for="mtg">Magic the Gathering:</label
               ><input id="mtg" type="radio" name="game" checked />
+              <label for="card-search">Search:</label>
             </div>
-            <label for="card-search">Search:</label>
-
             <input type="text" id="card-search" />
             <button id="search-btn">Submit</button>
-          </div>
+          </form>
           <div id="search-results"></div>
         </div>
         <hr />
