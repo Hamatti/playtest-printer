@@ -127,3 +127,10 @@ bulkImportForm.addEventListener("submit", async (event) => {
   bulkImportBtn.disabled = false;
   return false;
 });
+
+document
+  .querySelector("button#import-toggle")
+  .addEventListener("click", (event) => {
+    document.querySelector("aside#import-aside").classList.toggle("visible");
+    document.querySelector("aside#search-aside").classList.remove("visible");
+  });

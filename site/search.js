@@ -182,6 +182,9 @@ async function search(event) {
 }
 searchBtn.addEventListener("click", search);
 
-document.querySelector("button#overlay").addEventListener("click", (event) => {
-  document.querySelector("aside").classList.toggle("visible");
-});
+document
+  .querySelector("button#search-toggle")
+  .addEventListener("click", (event) => {
+    document.querySelector("aside#search-aside").classList.toggle("visible");
+    document.querySelector("aside#import-aside").classList.remove("visible");
+  });

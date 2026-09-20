@@ -20,7 +20,8 @@ button {
   margin-right: 20px;
 }
 
-button#overlay {
+button#search-toggle,
+button#import-toggle {
   border: none;
 }
 

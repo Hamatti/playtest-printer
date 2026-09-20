@@ -22,7 +22,16 @@
         </div>
         <div>
           <button id="help" aria-label="help">?</button>
-          <button id="overlay" aria-label="Open search">&#x1F50D;</button>
+          <button
+            id="import-toggle"
+            aria-label="Open bulk import"
+            title="Import"
+          >
+            &#8593;
+          </button>
+          <button id="search-toggle" aria-label="Open search" title="Search">
+            &#x1F50D;
+          </button>
         </div>
       </div>
     </div>
@@ -58,7 +67,7 @@
 
         <div id="proxy-zone"></div>
       </main>
-      <aside class="no-print">
+      <aside class="no-print" id="search-aside">
         <div id="search-overlay">
           <h2>Search Magic the Gathering cards</h2>
           <form>
@@ -70,7 +79,9 @@
           </form>
           <div id="search-results"></div>
         </div>
-        <hr />
+      </aside>
+
+      <aside class="no-print" id="import-aside">
         <h2>Import bulk list from Moxfield</h2>
         <form id="bulk-import">
           <textarea name="bulk-decklist" rows="20"></textarea>
