@@ -96,9 +96,14 @@ function renderBulkImport(cards, importErrors, apiErrors) {
       } else {
         const img = document.createElement("img");
         const button = document.createElement("button");
-        button.addEventListener("dblclick", handleRemoveCard);
+        button.addEventListener("contextmenu", handleAltArtDialog);
         img.src = card.image;
         img.alt = card.name;
+
+        if (card.alternate_prints_uri) {
+          img.dataset.alts = card.alternate_prints_uri;
+          button.addEventListener("contextmenu", handleShowAlternativeArts);
+        }
 
         button.appendChild(img);
         proxyZone.appendChild(button);

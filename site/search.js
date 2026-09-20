@@ -25,7 +25,9 @@ function handleAddCard(event) {
   const frontButton = document.createElement("button");
   frontImage.src = target.src;
   frontImage.alt = target.dataset.name;
+  frontImage.dataset.alts = target.dataset.alts;
   frontButton.addEventListener("dblclick", handleRemoveCard);
+  frontButton.addEventListener("contextmenu", handleAltArtDialog);
   frontButton.appendChild(frontImage);
   proxyZone.appendChild(frontButton);
 
@@ -33,7 +35,9 @@ function handleAddCard(event) {
   if (target.dataset.flip) {
     const backImage = document.createElement("img");
     const backButton = document.createElement("button");
+    backButton.addEventListener("contextmenu", handleAltArtDialog);
     backImage.src = target.dataset.flip;
+    backImage.dataset.alts = target.dataset.alts;
 
     let [frontName, backName] = target.dataset.name.split("//");
     frontImage.alt = frontName.trim();
