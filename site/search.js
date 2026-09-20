@@ -95,6 +95,7 @@ async function handleShowAlternativeArts(event) {
     }
 
     img.dataset.name = card.name;
+    img.dataset.alts = target.dataset.alts;
 
     button.addEventListener("click", handleAddCard);
 
