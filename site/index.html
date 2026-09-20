@@ -60,13 +60,12 @@
       </main>
       <aside class="no-print">
         <div id="search-overlay">
+          <h2>Search Magic the Gathering cards</h2>
           <form>
-            <div class="search-options">
-              <label for="mtg">Magic the Gathering:</label
-              ><input id="mtg" type="radio" name="game" checked />
+            <div>
               <label for="card-search">Search:</label>
+              <input type="text" id="card-search" />
             </div>
-            <input type="text" id="card-search" />
             <button id="search-btn">Submit</button>
           </form>
           <div id="search-results"></div>
@@ -79,8 +78,17 @@
         </form>
       </aside>
     </div>
+
+    <!-- Dialog used to display alternative arts for a card in proxy zone-->
+    <dialog id="alt-art-dialog" class="no-print">
+      <h2>Choose new art</h2>
+      <ul></ul>
+      <hr />
+      <button id="alt-art-dialog-close">Close</button>
+    </dialog>
     <script src="playtest.js"></script>
     <script src="search.js"></script>
     <script src="bulk-import.js"></script>
+    <script src="alternatives.js"></script>
   </body>
 </html>

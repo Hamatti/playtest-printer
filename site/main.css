@@ -75,11 +75,24 @@ aside {
   height: 100vh;
   padding-left: 1em;
 }
+
 #search-overlay {
   width: 500px;
   flex-basis: 0;
-}
 
+  form {
+    button {
+      margin-top: 1em;
+      max-width: 20ch;
+    }
+  }
+}
+aside {
+  hr {
+    margin: 1em 0;
+    color: #dcd8d8;
+  }
+}
 aside.visible {
   flex-basis: 500px;
   flex-grow: 1;
@@ -118,4 +131,12 @@ button:has(img) {
   margin: 0;
   padding: 0;
   background: none;
+}
+
+dialog#alt-art-dialog ul {
+  display: flex;
+  max-width: 80%;
+  flex-wrap: wrap;
+  gap: 1em;
+  list-style: none;
 }
