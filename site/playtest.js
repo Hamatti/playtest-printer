@@ -40,8 +40,8 @@ if (window.FileReader) {
         // If parseCount checkbox is checked, parse filenames
         // if they start with [N]x- and capture [N] as count
         let count = 1;
+        let filename = file.name || file[1].name;
         if (shouldParseCounts) {
-          let filename = file.name || file[1].name;
           const matches = filename.match(countPattern);
           if (matches) {
             count = parseInt(matches[1], 10);
@@ -56,13 +56,20 @@ if (window.FileReader) {
             let bin = this.result;
             for (let i = 0; i < count; i++) {
               let img = document.createElement("img");
+              let button = document.createElement("button");
               img.file = file;
+              img.alt = filename;
               img.src = bin;
 
-              img.addEventListener("dblclick", (event) => {
-                event.target.remove();
-              });
-              output.appendChild(img);
+              button.addEventListener(
+                "dblclick",
+                (event) => {
+                  event.currentTarget.remove();
+                },
+                { capture: true },
+              );
+              button.appendChild(img);
+              output.appendChild(button);
             }
           }.bindToEventHandler(file),
         );

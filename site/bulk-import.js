@@ -48,6 +48,7 @@ async function searchScryfall(cards) {
             alternate_prints_uri: cardResponse.prints_search_uri,
             layout: cardResponse.layout,
             qty: card.qty,
+            name: card.name,
           };
         })
         .filter((c) => c)[0];
@@ -74,17 +75,33 @@ function renderBulkImport(cards, importErrors, apiErrors) {
         card.card_faces?.length > 0 &&
         !doubleCardLayouts.includes(card.layout)
       ) {
-        const front = document.createElement("img");
-        const back = document.createElement("img");
+        const frontImage = document.createElement("img");
+        const frontButton = document.createElement("button");
+        const backImage = document.createElement("img");
+        const backButton = document.createElement("button");
 
-        front.src = card.card_faces[0].image_uris?.normal;
-        back.src = card.card_faces[1].image_uris?.normal;
-        proxyZone.appendChild(front);
-        proxyZone.appendChild(back);
+        frontImage.src = card.card_faces[0].image_uris?.normal;
+        frontImage.alt = card.card_faces[0].name;
+        backImage.src = card.card_faces[1].image_uris?.normal;
+        backImage.alt = card.card_faces[1].name;
+
+        frontButton.appendChild(frontImage);
+        proxyZone.appendChild(frontButton);
+
+        backButton.appendChild(backImage);
+        proxyZone.appendChild(backButton);
+
+        backButton.addEventListener("dblclick", handleRemoveCard);
+        frontButton.addEventListener("dblclick", handleRemoveCard);
       } else {
         const img = document.createElement("img");
+        const button = document.createElement("button");
+        button.addEventListener("dblclick", handleRemoveCard);
         img.src = card.image;
-        proxyZone.appendChild(img);
+        img.alt = card.name;
+
+        button.appendChild(img);
+        proxyZone.appendChild(button);
       }
     }
   });

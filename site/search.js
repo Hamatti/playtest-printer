@@ -11,12 +11,6 @@ const mtgAPI = "https://api.scryfall.com/cards/search?q=";
 
 const doubleCardLayouts = ["adventure", "split", "prototype", "prepare"];
 
-document.addEventListener("keyup", (event) => {
-  if (event.key === "Enter") {
-    search(event);
-  }
-});
-
 /**
  * Adds card from search to proxy zone.
  *
@@ -26,17 +20,30 @@ document.addEventListener("keyup", (event) => {
  * @param {Event} event
  */
 function handleAddCard(event) {
-  const proxyImage = document.createElement("img");
-  proxyImage.src = event.target.src;
-  proxyImage.addEventListener("dblclick", handleRemoveCard);
-  proxyZone.appendChild(proxyImage);
-  if (event.target.dataset.flip) {
-    // For double-sided cards, automatically add backside
-    const flipImage = document.createElement("img");
-    flipImage.src = event.target.dataset.flip;
-    flipImage.addEventListener("dblclick", handleRemoveCard);
-    proxyZone.appendChild(flipImage);
+  const target = event.currentTarget.querySelector("img");
+  const frontImage = document.createElement("img");
+  const frontButton = document.createElement("button");
+  frontImage.src = target.src;
+  frontImage.alt = target.dataset.name;
+  frontButton.addEventListener("dblclick", handleRemoveCard);
+  frontButton.appendChild(frontImage);
+  proxyZone.appendChild(frontButton);
+
+  // For double-sided cards, automatically add backside
+  if (target.dataset.flip) {
+    const backImage = document.createElement("img");
+    const backButton = document.createElement("button");
+    backImage.src = target.dataset.flip;
+
+    let [frontName, backName] = target.dataset.name.split("//");
+    frontImage.alt = frontName.trim();
+    backImage.alt = backName.trim();
+    backButton.addEventListener("dblclick", handleRemoveCard);
+    backButton.appendChild(backImage);
+    proxyZone.appendChild(backButton);
   }
+
+  // Return focus to search input
   searchInput.focus();
   searchInput.select();
 }
@@ -46,7 +53,7 @@ function handleAddCard(event) {
  * @param {Event} event
  */
 function handleRemoveCard(event) {
-  event.target.remove();
+  event.currentTarget.remove();
 }
 
 /**
@@ -71,8 +78,8 @@ async function handleShowAlternativeArts(event) {
   data.data.forEach((card) => {
     const li = document.createElement("li");
     const img = document.createElement("img");
+    const button = document.createElement("button");
 
-    let image = null;
     if (
       card.card_faces?.length > 0 &&
       !doubleCardLayouts.includes(card.layout)
@@ -83,9 +90,12 @@ async function handleShowAlternativeArts(event) {
       img.src = card.image_uris?.normal;
     }
 
-    img.addEventListener("click", handleAddCard);
+    img.dataset.name = card.name;
 
-    li.appendChild(img);
+    button.addEventListener("click", handleAddCard);
+
+    button.appendChild(img);
+    li.appendChild(button);
     ul.appendChild(li);
   });
   searchResults.appendChild(ul);
@@ -102,6 +112,7 @@ function renderSearchResults(cards) {
   cards.forEach((card) => {
     const li = document.createElement("li");
     const img = document.createElement("img");
+    const button = document.createElement("button");
 
     if (
       card.card_faces?.length > 0 &&
@@ -113,13 +124,17 @@ function renderSearchResults(cards) {
       img.src = card.image;
     }
 
+    img.dataset.name = card.name;
+    img.alt = card.name;
+
     if (card.alternate_prints_uri) {
       img.dataset.alts = card.alternate_prints_uri;
-      img.addEventListener("contextmenu", handleShowAlternativeArts);
+      button.addEventListener("contextmenu", handleShowAlternativeArts);
     }
 
-    img.addEventListener("click", handleAddCard);
-    li.appendChild(img);
+    button.addEventListener("click", handleAddCard);
+    button.appendChild(img);
+    li.appendChild(button);
     ul.appendChild(li);
   });
 
@@ -147,6 +162,7 @@ async function search(event) {
         card_faces: card.card_faces,
         alternate_prints_uri: card.prints_search_uri,
         layout: card.layout,
+        name: card.name,
       };
     })
     .filter((c) => c);
