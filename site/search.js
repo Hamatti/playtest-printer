@@ -25,9 +25,7 @@ function handleAddCard(event) {
   const frontButton = document.createElement("button");
   frontImage.src = target.src;
   frontImage.alt = target.dataset.name;
-  if (target.dataset.alts) {
-    frontImage.dataset.alts = target.dataset.alts;
-  }
+  frontImage.dataset.alts = target.dataset.alts;
   frontButton.addEventListener("dblclick", handleRemoveCard);
   frontButton.addEventListener("contextmenu", handleAltArtDialog);
   frontButton.appendChild(frontImage);
@@ -190,5 +188,4 @@ document
   .addEventListener("click", (event) => {
     document.querySelector("aside#search-aside").classList.toggle("visible");
     document.querySelector("aside#import-aside").classList.remove("visible");
-    document.querySelector("aside#pokemon-aside").classList.remove("visible");
   });
