@@ -21,7 +21,8 @@ button {
 }
 
 button#search-toggle,
-button#import-toggle {
+button#import-toggle,
+button#pokemon-toggle {
   border: none;
 }
 
@@ -95,7 +96,7 @@ aside {
   }
 }
 aside.visible {
-  flex-basis: 500px;
+  flex-basis: 770px;
   flex-grow: 1;
   display: block;
 }

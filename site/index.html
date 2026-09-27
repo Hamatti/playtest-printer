@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Playtest Printer</title>
+    <meta charset="utf8" />
     <meta property="og:title" content="Playtest Printer" />
     <meta
       property="og:description"
@@ -31,6 +32,14 @@
           </button>
           <button id="search-toggle" aria-label="Open search" title="Search">
             &#x1F50D;
+          </button>
+          <button
+            id="pokemon-toggle"
+            aria-label="Open search"
+            title="Search Pokemon"
+            style="display: none"
+          >
+            &#9881;
           </button>
         </div>
       </div>
@@ -81,6 +90,20 @@
         </div>
       </aside>
 
+      <aside class="no-print" id="pokemon-aside">
+        <div id="pokemon-overlay">
+          <h2>Search Pokémon TCG cards</h2>
+          <form>
+            <div>
+              <label for="card-search-pokemon">Search:</label>
+              <input type="text" id="card-search-pokemon" />
+            </div>
+            <button id="search-pokemon-btn">Submit</button>
+          </form>
+          <div id="search-results-pokemon"></div>
+        </div>
+      </aside>
+
       <aside class="no-print" id="import-aside">
         <h2>Import bulk list from Moxfield</h2>
         <form id="bulk-import">
@@ -101,5 +124,6 @@
     <script src="search.js"></script>
     <script src="bulk-import.js"></script>
     <script src="alternatives.js"></script>
+    <script src="pokemon.js"></script>
   </body>
 </html>

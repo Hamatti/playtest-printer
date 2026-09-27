@@ -133,4 +133,5 @@ document
   .addEventListener("click", (event) => {
     document.querySelector("aside#import-aside").classList.toggle("visible");
     document.querySelector("aside#search-aside").classList.remove("visible");
+    document.querySelector("aside#pokemon-aside").classList.remove("visible");
   });
