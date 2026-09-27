@@ -23,8 +23,11 @@ function handleSelectAltArt(target, img) {
  * @param {Event} event
  */
 async function handleAltArtDialog(event) {
-  event.preventDefault();
   const target = event.currentTarget.querySelector("img");
+  if (!target.dataset.alts) {
+    return false;
+  }
+  event.preventDefault();
   const altUri = target.dataset.alts;
 
   const resp = await fetch(altUri);
